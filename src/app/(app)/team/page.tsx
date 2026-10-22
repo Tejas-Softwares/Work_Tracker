@@ -55,7 +55,7 @@ export default async function TeamPage({ searchParams }: { searchParams: Promise
   const vacancies = org.active.filter((p) => p.isVacancy);
 
   return (
-    <div className="mx-auto max-w-[1100px]">
+    <div className={view === "departments" ? "mx-auto max-w-[1100px]" : "mx-auto max-w-[1600px]"}>
       <PageHeader
         title="Team and roles"
         sub={`${org.active.filter((p) => !p.isVacancy).length} people${vacancies.length ? ` and ${vacancies.length} seats being hired` : ""}. Open anyone to see their role card${managedIds(org, v).size || seesEverything(v) ? ", work and scores" : ""}.`}
