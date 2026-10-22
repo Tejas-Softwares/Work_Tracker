@@ -1,0 +1,243 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("/fonts/archivo-latin-standard-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("/fonts/archivo-latin-ext-standard-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+  Tejas Work Tracker tokens.
+  Paper white with the Tejas navy and blue. Status colours follow Indian three-phase wiring:
+  red phase = blocked, yellow phase = overdue / at risk, blue phase = in progress, earth green = done.
+*/
+@theme {
+  --font-sans: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-paper: #ffffff;
+  --color-wash: #f5f6f9;
+  --color-wash-2: #eceef4;
+  --color-line: #e1e4ec;
+  --color-line-strong: #c9cedb;
+  --color-ink: #1a2238;
+  --color-ink-2: #4b5470;
+  --color-ink-3: #78809a;
+
+  --color-navy: #23305a;
+  --color-navy-2: #2f3f73;
+  --color-brand: #3f5db0;
+  --color-brand-hover: #344f9a;
+  --color-brand-wash: #ecf0fa;
+  --color-brand-line: #c6d1ee;
+
+  --color-phase-r: #c0392b;
+  --color-phase-r-wash: #fbedeb;
+  --color-phase-y: #9a6700;
+  --color-phase-y-mark: #e0a526;
+  --color-phase-y-wash: #fdf4dd;
+  --color-phase-b: #3f5db0;
+  --color-phase-b-wash: #ecf0fa;
+  --color-earth: #2d7a4f;
+  --color-earth-mark: #3e9c66;
+  --color-earth-wash: #e6f3eb;
+  --color-neutral-mark: #9aa1b5;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --shadow-pop: 0 10px 30px -12px rgb(26 34 56 / 0.28), 0 2px 6px -2px rgb(26 34 56 / 0.12);
+}
+
+@layer base {
+  html {
+    color: var(--color-ink);
+    background: var(--color-paper);
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: "ss01" on;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.45;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  h1, h2, h3 {
+    font-stretch: 92%;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+  input, select, textarea, button {
+    font: inherit;
+    color: inherit;
+  }
+  .num, td.num, th.num {
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-weight: 550;
+    font-size: 13.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .btn:hover { background: var(--color-wash); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-primary {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--color-brand-hover); border-color: var(--color-brand-hover); }
+  .btn-danger { color: var(--color-phase-r); border-color: #e7b8b1; }
+  .btn-danger:hover { background: var(--color-phase-r-wash); }
+  .btn-ghost { border-color: transparent; background: transparent; }
+  .btn-ghost:hover { background: var(--color-wash); }
+  .btn-sm { height: 28px; padding: 0 9px; font-size: 12.5px; }
+  .btn-icon { width: 34px; padding: 0; }
+  .btn-sm.btn-icon { width: 28px; }
+
+  .field { display: grid; gap: 5px; }
+  .label { font-size: 12.5px; font-weight: 600; color: var(--color-ink-2); }
+  .hint { font-size: 12px; color: var(--color-ink-3); }
+  .input, .select, .textarea {
+    width: 100%;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-paper);
+    font-size: 14px;
+  }
+  .textarea { height: auto; min-height: 84px; padding: 8px 10px; resize: vertical; line-height: 1.5; }
+  .select { padding-right: 28px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234b5470' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+  .input:focus, .select:focus, .textarea:focus { outline: 2px solid var(--color-brand-line); border-color: var(--color-brand); outline-offset: 0; }
+  .input[aria-invalid="true"] { border-color: var(--color-phase-r); }
+
+  .panel {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-paper);
+  }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .panel-title { font-size: 14.5px; font-weight: 650; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 550;
+    background: var(--color-wash-2);
+    color: var(--color-ink-2);
+    white-space: nowrap;
+  }
+
+  .table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-ink-3);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-paper);
+    white-space: nowrap;
+  }
+  .table td { padding: 9px 12px; border-bottom: 1px solid var(--color-line); vertical-align: middle; }
+  .table tr:last-child td { border-bottom: 0; }
+  .table tbody tr:hover td { background: #fafbfd; }
+
+  .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--color-line); overflow-x: auto; }
+  .tab {
+    padding: 9px 12px;
+    font-size: 13.5px;
+    font-weight: 550;
+    color: var(--color-ink-2);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--color-ink); }
+  .tab[aria-current="page"], .tab[aria-selected="true"] { color: var(--color-navy); border-bottom-color: var(--color-navy); }
+
+  .link { color: var(--color-brand); font-weight: 550; }
+  .link:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .page-title { font-size: 22px; font-weight: 700; line-height: 1.2; }
+  .section-title { font-size: 15px; font-weight: 650; }
+
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    height: 18px;
+    padding: 0 5px;
+    border: 1px solid var(--color-line-strong);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--color-ink-3);
+    background: var(--color-paper);
+  }
+}
+
+/* Drawer and dialog motion: they answer a click, so they move. */
+@keyframes slide-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pop-in { from { transform: translateY(6px) scale(0.99); opacity: 0; } to { transform: none; opacity: 1; } }
+.anim-slide { animation: slide-in 0.18s ease-out; }
+.anim-pop { animation: pop-in 0.14s ease-out; }
+
+/* Print a page cleanly (meeting minutes, scorecards). */
+@media print {
+  .no-print { display: none !important; }
+  body { font-size: 12px; }
+  main { padding: 0 !important; }
+}
